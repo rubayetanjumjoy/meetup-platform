@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+</head>
+
+<body>
+    {% include 'base.html' %}
+    <main>
+        <header>
+            <h1>{{event.name}}</h1>
+        </header>
+        <section id="event-info">
+            <h2>Event Information</h2>
+            <p><strong>Venue:</strong> <span id="venue">{{ event.venue }}</span></p>
+            <p><strong>Start Date:</strong> <span id="start-date">{{ event.start_date }}</span></p>
+            <p><strong>End Date:</strong> <span id="end-date">{{ event.end_date }}</span></p>
+            <p><strong>Ticket Price:</strong> $<span id="ticket-price">{{ event.ticket_price }}</span></p>
+            <p><strong>Event Link:</strong> <a href="{{ event.event_link }}" id="event-link" target="_blank">Register
+                    Now</a></p>
+        </section>
+        <section id="event-map">
+            <h2>Event Location</h2>
+            <!-- Map container -->
+            <div id="map"></div>
+        </section>
+    </main>
+
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Retrieve latitude and longitude from the context
+        const latitude = "{{ event.venue.latitude }}";
+        const longitude = "{{ event.venue.longitude}}";
+
+        // Create a map centered at the venue's latitude and longitude
+        const map = L.map('map').setView([latitude, longitude], 15);
+
+        // Add a tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Add a marker at the venue's location
+        L.marker([latitude, longitude]).addTo(map)
+            .bindPopup("Venue: {{ event.venue }}")
+            .openPopup();
+    </script>
+</body>
+
+</html>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+    }
+
+
+
+    h1 {
+        margin: 0;
+        font-size: 32px;
+    }
+
+    main {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+    }
+
+    h2 {
+        color: #333;
+        font-size: 24px;
+        margin-top: 20px;
+    }
+
+    p {
+        margin: 0;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #event-link {
+        color: #007BFF;
+        text-decoration: none;
+    }
+
+    #event-link:hover {
+        text-decoration: underline;
+    }
+
+    #map {
+        height: 300px;
+        margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+        #map {
+            height: 200px;
+        }
+    }
+</style>

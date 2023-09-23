@@ -1,0 +1,193 @@
+<header>
+    <link rel="stylesheet" type="text/css" href="path/to/your-stylesheet.css">
+
+
+
+    <h1><a href="{% url 'home' %}" style="font-style: italic;; text-decoration: none;">EventMeet</a></h1>
+    {% url 'home' as home_page_url %}
+    {% if request.path == home_page_url %}
+    <div class=" search-bar-container">
+        <i class="material-icons search-icon">search</i>
+        <input type="text" id="search-bar" class="search-bar" placeholder="Search events..."
+            oninput="fetchEvents(this.value)">
+    </div>
+
+    {% endif %}
+    <div class="dropdown-wrapper">
+        <div class="header-profile">
+            {% if user.is_authenticated %}
+            <div class="profile-dropdown">
+                <button class="profile-button">
+                    <span>Welcome, {{ user.username }}</span>
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+            {% else %}
+            <a href="{% url 'login'  %}" class="header-button">Login</a>
+            <a href="{% url 'signup'  %}" class="header-button">Signup</a>
+            {% endif %}
+        </div>
+    </div>
+</header>
+<style>
+    /* Style the search icon */
+    .search-icon {
+        font-size: 24px;
+        color: #888;
+
+        margin-right: 10px;
+
+        vertical-align: middle;
+    }
+
+    /* Style the search input container */
+    .search-bar-container {
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+
+    }
+
+    /* Adjust the input width as needed */
+    .search-bar {
+        flex: 1;
+
+        border: none;
+        font-size: 18px;
+        outline: none;
+
+    }
+
+    header h1 a {
+        text-decoration: none;
+
+        color: inherit;
+
+
+
+    }
+
+    /* Profile dropdown container */
+    .profile-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Profile button styles */
+    .profile-button {
+        background-color: #4285F4;
+        color: #FFFFFF;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+    }
+
+    .profile-button span {
+        margin-right: 5px;
+    }
+
+    .profile-button i {
+        font-size: 14px;
+    }
+
+    .profile-button:hover {
+        background-color: #357ABD;
+    }
+
+    /* Dropdown content container */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #FFFFFF;
+        min-width: 170px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 5px;
+    }
+
+    /* Dropdown content link styles */
+    .dropdown-content a {
+        color: #333;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        transition: background-color 0.3s ease;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f2f2f2;
+    }
+
+
+    .profile-dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+
+    body {
+
+        font-family: 'Poppins', sans-serif;
+        background-color: #f2f2f2;
+    }
+
+    /* Header styles */
+    header {
+        background-color: #03A9F4;
+        color: #FFFFFF;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+    }
+
+    /* Main title styles */
+    h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    /* Header buttons container */
+    .header-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    /* Header button styles */
+    .header-button {
+        padding: 8px 16px;
+        background-color: #4285F4;
+        color: #FFFFFF;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        font-size: 18px;
+    }
+
+    .header-button:hover {
+        background-color: #357ABD;
+    }
+
+    .dropdown-content {
+        width: inherit;
+        min-width: 100%;
+
+    }
+
+
+    .profile-button {
+        width: inherit;
+
+        text-align: left;
+
+    }
+</style>

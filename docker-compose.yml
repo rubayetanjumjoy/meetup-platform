@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  # Django application
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - DEBUG=True
+   
