@@ -226,4 +226,4 @@ class Event(models.Model):
             # Handle any error or provide appropriate feedback
             raise ValidationError("Failed to delete event on Eventbrite")
 
-            # You can raise an exception or log the error as needed
+            
